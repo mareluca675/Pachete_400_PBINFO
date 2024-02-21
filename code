@@ -1,0 +1,55 @@
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+int n, mutari;
+int vec[102];
+vector<int> m;
+
+int main()
+{
+    ifstream cin("pachete.in");
+    ofstream cout("pachete.out");
+
+    cin >> n;
+
+    for (int i = 1; i <= n; i++) {
+        cin >> vec[i];
+    }
+
+    vec[n + 1] = 0;
+    int ind = n + 1;
+
+    for (int i = 1; i < n + 1; i++) {
+        if (vec[i] != i) {
+
+            if (vec[i] != 0){
+                m.push_back(i);
+                m.push_back(ind);
+                swap(vec[i], vec[ind]);
+                mutari++;
+                ind = i;
+            }
+
+            for (int j = i + 1; j <= n + 1; j++) {
+                if (vec[j] == i) {
+                    swap(vec[ind], vec[j]);
+                    m.push_back(j);
+                    m.push_back(i);
+                    mutari++;
+
+                    ind = j;
+                    break;
+                }
+            }
+        }
+    }
+
+    cout << mutari << '\n';
+    for (int i = 0; i < mutari * 2; i += 2) {
+        cout << m[i] << ' ' << m[i + 1] << '\n';
+    }
+
+    return 0;
+}
